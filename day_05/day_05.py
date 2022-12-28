@@ -1,3 +1,4 @@
+import copy
 from collections import defaultdict
 
 
@@ -28,14 +29,30 @@ def move_crates(n, stack_from, stack_to):
     return stack_from, stack_to
 
 
+def move_crates_CrateMover9001(n, stack_from, stack_to):
+    temp = []
+    for move in range(n):
+        temp.append(stack_from.pop())
+    stack_to.extend(reversed(temp))
+    return stack_from, stack_to
+
+
 def main():
 
     moves, stacks = parse_txt('input.txt')
+    stacks_part2 = copy.deepcopy(stacks)
 
+    # Part 1
     for n, stack_from, stack_to in moves:
         stacks[stack_from], stacks[stack_to] = move_crates(n, stacks[stack_from], stacks[stack_to])
 
     print(''.join([str(stacks[stack][-1]) for stack in stacks]))
+
+    # Part 2
+    for n, stack_from, stack_to in moves:
+        stacks_part2[stack_from], stacks_part2[stack_to] = move_crates_CrateMover9001(n, stacks_part2[stack_from], stacks_part2[stack_to])
+
+    print(''.join([str(stacks_part2[stack][-1]) for stack in stacks_part2]))
 
 
 if __name__ == '__main__':
