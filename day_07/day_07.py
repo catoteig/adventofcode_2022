@@ -48,7 +48,10 @@ def main():
 
     root = newNode(0, '/', None)
     curr_node = root
-    check_nodes = [root]
+    all_directories = [root]
+
+    total_disc_space = 70000000
+    needed_disc_space = 30000000
 
     for command in commands:
         if re.fullmatch('^\$ cd /$', command):
@@ -62,20 +65,30 @@ def main():
         elif re.fullmatch('\$ cd \.{2}$', command):
             curr_node = curr_node.parent
         else:
-            print(command)
             p1, p2 = command.split(' ')
             if p1 == 'dir':
                 curr_node.children.append(n := newNode(0, p2, curr_node))
-                check_nodes.append(n)
+                all_directories.append(n)
             else:
                 curr_node.children.append(newNode(int(p1), p2, curr_node))
 
+    # Part 1
     total_size = 0
-    for node in check_nodes:
+    for node in all_directories:
         if (size := sumNodes(node)) <= 100*1000:
             total_size += size
 
     print(total_size)
+
+    # Part 2
+    used_disc_size = sumNodes(root)
+    to_delete = needed_disc_space - (total_disc_space - used_disc_size)
+    values = []
+    for node in all_directories:
+        if (size := sumNodes(node)) >= to_delete:
+            values.append(size)
+
+    print(min(values))
 
 
 if __name__ == '__main__':
