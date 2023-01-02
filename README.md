@@ -11,6 +11,6 @@ https://adventofcode.com/
 |   7 | :star::star: |  19 |     |
 |   8 | :star::star: |  20 |     |
 |   9 | :star::star: |  21 |     |
-|  10 |              |  22 |     |
+|  10 | :star:       |  22 |     |
 |  11 |              |  23 |     |
 |  12 |              |  24 |     |
