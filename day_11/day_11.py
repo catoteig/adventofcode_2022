@@ -1,3 +1,4 @@
+from math import prod
 import pprint
 from collections import defaultdict
 
@@ -23,11 +24,15 @@ def main():
 
     items = defaultdict(list)
     for monkey in monkeys: items[monkey] = monkeys[monkey]['start_items']
+
+    # Used the internet to figure this out...
+    modulo = prod([_['test']['divisible_by'] for _ in monkeys.values()])
+
     inspected = defaultdict(int)
     for monkey in monkeys: inspected[monkey] = 0
     throw_to_list = []
 
-    for _ in range(20):
+    for _ in range(10*1000):
         for monkey in monkeys:
 
             # Inspect item
@@ -41,7 +46,10 @@ def main():
                     worry_level = item * op_value
                 elif operator == '+':
                     worry_level = item + op_value
-                worry_level //= 3
+
+                # worry_level //= 3 # Part 1
+                worry_level %= modulo  # Part 2
+
                 items[monkey][i] = worry_level
                 if worry_level % monkeys[monkey]['test']['divisible_by'] == 0:
                     throw_to_list.append(monkeys[monkey]['test']['if_true'])
